@@ -19,4 +19,28 @@ public class ObjectsAndVariables {
 		removeElement(a, 0);
 		System.out.println(a==b);
 	}
+	
+	public void multipliesInPlace(int[] a, int m) {
+		if (a == null) {
+			return;
+		}
+		for (int i = 0; i < a.length; i++) {
+			a[i] = a[i]*m;
+		}
+	}
+	
+	public String addTwoStrings(String a, String b) {
+		return a+b;
+	}
+	
+	public void comp(int a, long b) {
+		System.out.println(1);
+	}
+	
+	public void comp(long a, int b) {
+		System.out.println(2);
+	}
+	public void comp(long a, long b) {
+		System.out.println(3);
+	}
 }
