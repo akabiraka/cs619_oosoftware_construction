@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.ch2.ObjectsAndVariables;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 class UnitTests {
 	ObjectsAndVariables objectsAndVariables = null;

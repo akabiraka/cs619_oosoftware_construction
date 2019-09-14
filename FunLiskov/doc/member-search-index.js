@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.ch5","c":"IntSet","l":"choose()"},{"p":"com.ch5","c":"IntSet","l":"insert(int)"},{"p":"com.ch5","c":"IntSet","l":"IntSet()","url":"%3Cinit%3E()"},{"p":"com.ch5","c":"IntSet","l":"isIn(int)"},{"p":"com.ch5","c":"IntSet","l":"remove(int)"},{"p":"com.ch5","c":"IntSet","l":"size()"}]
