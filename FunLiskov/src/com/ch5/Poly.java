@@ -136,9 +136,25 @@ public class Poly {
 			sm = this;
 		}
 		int newdeg = la.deg; // new degree is the larger degree
-
-		// other things to implement
-		return null;
+		if (deg == q.deg) {
+			for (int k = deg; k > 0; k--) {
+				if (trms[k] + q.trms[k] != 0) {
+					break;
+				}else {
+					newdeg--;
+				}
+			}
+		}
+		
+		Poly r = new Poly(newdeg);
+		int i;
+		for (i = 0; i <= sm.deg && i<=newdeg; i++) {
+			r.trms[i] = sm.trms[i] + la.trms[i];
+		}
+		for (int j = i; j <= newdeg; j++) {
+			r.trms[j] = la.trms[j];
+		}
+		return r;
 	}
 
 	/**
@@ -150,7 +166,18 @@ public class Poly {
 	public Poly mul(Poly q) {
 		// EFFECTS: If q is null throws NullPointerException, else retuns the Poly
 		// this*q
+		if ((q.deg == 0 && q.trms[0]==0) || (deg==0 && trms[0]==0)) {
+			return new Poly();
+		}
 		
-		return null;
+		Poly r = new Poly(deg+q.deg);
+		r.trms[deg+q.deg] = 0;
+		for (int i = 0; i <= deg; i++) {
+			for (int j = 0; j <= q.deg; j++) {
+				r.trms[i+j] = r.trms[i+j] + trms[i]*q.trms[j];
+			}
+		}
+		
+		return r;
 	}
 }

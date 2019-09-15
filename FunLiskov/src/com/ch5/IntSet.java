@@ -10,14 +10,14 @@ import com.customExceptions.EmptyException;
  * @author akabir
  */
 public class IntSet {
-	private Vector els; // the rep(representation), the instance variable
+	private Vector els = new Vector(); // the rep(representation), the instance variable
 
 	// constructors
 	/**
 	 * Effects: Initializes this to be empty.
 	 */
 	public IntSet() {
-		els = new Vector();
+		//els = new Vector();
 	}
 
 	// methods
