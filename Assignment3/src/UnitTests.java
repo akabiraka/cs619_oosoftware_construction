@@ -74,7 +74,7 @@ class UnitTests {
 	}
 	
 	@Test
-	void test_happyPath() {
+	void test_fullHappyPath() {
 		Stack stack = new Stack();
 		stack = stack.push("cat");
 		stack = stack.push("dog");

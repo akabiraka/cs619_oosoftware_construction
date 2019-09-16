@@ -1,3 +1,5 @@
+
+
 /**
  * Stack is an unbounded, immutable implementation of "Bloch's Stack example
  * page 60, 3rd edition"
@@ -16,10 +18,9 @@ public class Stack {
 		this.elements = new Object[DEFAULT_INITIAL_CAPACITY];
 	}
 
-	private Stack(Object[] oldElements, int size) {
-		this.elements = new Object[oldElements.length];
-		this.size = size;
-		System.arraycopy(oldElements, 0, this.elements, 0, size);
+	private Stack(Object[] elements) {
+		this.elements = elements;
+		this.size = elements.length;
 	}
 
 	/**
@@ -30,15 +31,12 @@ public class Stack {
 	 * @throws IllegalArgumentException if e is null.
 	 */
 	public Stack push(Object e) {
-		// EFFECTS: If e is null throws IllegalArgumentException, else return Stack
-		// after e is being pushed at the top.
 		if (e == null)
-			throw new IllegalArgumentException("ImmutableStack.push: cannot push null object.");
-		Stack stack = new Stack(elements, size);
-		increaseCapacityIfNeeded(stack);
-		stack.elements[size] = e;
-		stack.size++;
-		return stack;
+			throw new IllegalArgumentException("Stack.push: cannot push null object.");
+		Object[] oldElements = new Object[this.elements.length + 1];
+		System.arraycopy(this.elements, 0, oldElements, 0, this.elements.length);
+		oldElements[this.elements.length] = e;
+		return new Stack(oldElements);
 	}
 
 	/**
@@ -50,11 +48,11 @@ public class Stack {
 	public Stack pop() {
 		// EFFECTS: If Stack is empty throws EmptyStackException, else return Stack
 		// after top element being popped up.
-		if (size == 0) {
+		if (size == 0)
 			throw new EmptyStackException("Stack.pop: Stack is empty.");
-		}
-		Stack stack = new Stack(elements, size - 1);
-		return stack;
+		Object[] newElements = new Object[this.elements.length-1];
+		System.arraycopy(this.elements, 0, newElements, 0, newElements.length);
+		return new Stack(newElements);
 	}
 
 	/**
@@ -66,11 +64,9 @@ public class Stack {
 	public Object top() {
 		// EFFECTS: If Stack is empty throws EmptyStackException, else return top Object
 		// of the Stack.
-		if (size == 0) {
+		if (size == 0)
 			throw new EmptyStackException("Stack.top: No element at the top, Stack is empty.");
-		}
-		int topIndex = size - 1;
-		return elements[topIndex];
+		return this.elements[this.elements.length - 1];
 	}
 
 	/**
@@ -80,14 +76,6 @@ public class Stack {
 	 */
 	public int getSize() {
 		return size;
-	}
-
-	private void increaseCapacityIfNeeded(Stack stack) {
-		if (stack.elements.length == size) {
-			Object oldElements[] = stack.elements;
-			stack.elements = new Object[2 * size + 1];
-			System.arraycopy(oldElements, 0, stack.elements, 0, size);
-		}
 	}
 }
 
