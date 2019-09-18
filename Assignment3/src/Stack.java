@@ -28,11 +28,9 @@ public class Stack {
 	 * 
 	 * @param e The Object to be pushed.
 	 * @return Stack after e being pushed.
-	 * @throws IllegalArgumentException if e is null.
 	 */
 	public Stack push(Object e) {
-		if (e == null)
-			throw new IllegalArgumentException("Stack.push: cannot push null object.");
+		// EFFECTS: Stack after e being pushed.
 		Object[] oldElements = new Object[this.elements.length + 1];
 		System.arraycopy(this.elements, 0, oldElements, 0, this.elements.length);
 		oldElements[this.elements.length] = e;
@@ -49,7 +47,7 @@ public class Stack {
 		// EFFECTS: If Stack is empty throws EmptyStackException, else return Stack
 		// after top element being popped up.
 		if (size == 0)
-			throw new EmptyStackException("Stack.pop: Stack is empty.");
+			throw new IllegalStateException("Stack.pop: Stack is empty.");
 		Object[] newElements = new Object[this.elements.length-1];
 		System.arraycopy(this.elements, 0, newElements, 0, newElements.length);
 		return new Stack(newElements);
@@ -65,7 +63,7 @@ public class Stack {
 		// EFFECTS: If Stack is empty throws EmptyStackException, else return top Object
 		// of the Stack.
 		if (size == 0)
-			throw new EmptyStackException("Stack.top: No element at the top, Stack is empty.");
+			throw new IllegalStateException("Stack.top: No element at the top, Stack is empty.");
 		return this.elements[this.elements.length - 1];
 	}
 
@@ -79,17 +77,3 @@ public class Stack {
 	}
 }
 
-class EmptyStackException extends RuntimeException {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public EmptyStackException() {
-		super();
-	}
-
-	public EmptyStackException(String msg) {
-		super(msg);
-	}
-}

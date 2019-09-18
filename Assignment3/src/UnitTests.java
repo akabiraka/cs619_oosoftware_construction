@@ -11,7 +11,7 @@ class UnitTests {
 	@Test
 	void test_pop_emptyStack() {
 		Stack stack = new Stack();
-		assertThrows(EmptyStackException.class, new Executable() {
+		assertThrows(IllegalStateException.class, new Executable() {
 			@Override
 			public void execute() throws Throwable {
 				// TODO Auto-generated method stub
@@ -23,7 +23,7 @@ class UnitTests {
 	@Test
 	void test_top_emptyStack() {
 		Stack stack = new Stack();
-		assertThrows(EmptyStackException.class, new Executable() {
+		assertThrows(IllegalStateException.class, new Executable() {
 			
 			@Override
 			public void execute() throws Throwable {
