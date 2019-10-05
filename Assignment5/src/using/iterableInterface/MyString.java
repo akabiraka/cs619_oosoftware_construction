@@ -4,8 +4,6 @@ import java.util.NoSuchElementException;
 
 public final class MyString implements Iterable {
 	private String str;
-	private MyString me;
-	private int i;
 
 	public MyString(String str) {
 		// TODO Auto-generated constructor stub
