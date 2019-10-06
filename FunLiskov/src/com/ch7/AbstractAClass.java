@@ -9,4 +9,8 @@ public abstract class AbstractAClass {
 	}
 
 	public abstract int getX();
+	
+	public AClass getS() {
+		return new AClass(0);
+	}
 }

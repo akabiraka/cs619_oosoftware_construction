@@ -17,5 +17,10 @@ public class AClassSubOfAbstractAClass extends AbstractAClass {
 		AClass aClass = new AClass(19);
 		return aClass.x;
 	}
+	
+	@Override
+	public AClassSub getS() throws IllegalArgumentException {
+		return new AClassSub(0);
+	}
 
 }
