@@ -3,6 +3,7 @@ package com.ch5;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -64,6 +65,17 @@ class UnitTests {
 			objects[0] = "i dont fit in";
 		});
 //		List<Object> objects2 = new ArrayList<Long>(); // compilation error
+	}
+	
+	@Test
+	void test() {
+		MyStack<Number> stack = new MyStack<Number>();
+		Iterable<Integer> integers = Arrays.asList(1, 2, 3, 45, 5);
+		Collection<Number> numbers = new ArrayList<Number>(); 
+		stack.pushAll(integers);
+		System.out.println(stack.size());
+		stack.popAll(numbers);
+		System.out.println(numbers.size());
 	}
 
 }
