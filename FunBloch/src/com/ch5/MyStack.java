@@ -26,10 +26,6 @@ public class MyStack<E> {
 		return stack.isEmpty();
 	}
 	
-	public int size() {
-		return stack.size();
-	}
-	
 	public void pushAll(Iterable<? extends E> es) {
 		for(E e: es)
 			push(e);
