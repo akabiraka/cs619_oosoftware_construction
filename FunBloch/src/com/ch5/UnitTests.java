@@ -75,7 +75,6 @@ class UnitTests {
 		Iterable<Integer> integers = Arrays.asList(1, 2, 3, 45, 5);
 		Collection<Number> numbers = new ArrayList<Number>();
 		stack.pushAll(integers);
-		System.out.println(stack.size());
 		stack.popAll(numbers);
 		System.out.println(numbers.size());
 	}
@@ -130,25 +129,25 @@ class UnitTests {
 		Collection stamps = new ArrayList();
 		stamps.add(Integer.valueOf(1));
 		stamps.add("stamp");
-		
+
 		assertThrows(ClassCastException.class, () -> {
 			for (Iterator iterator = stamps.iterator(); iterator.hasNext();) {
 				String string = (String) iterator.next();
 			}
 		});
 	}
-	
+
 	@Test
 	void test_fab_solved() {
 		Collection<String> stamps = new ArrayList<String>();
 		stamps.add("cat");
 //		stamps.add(Integer.valueOf(10));
 	}
-	
+
 	void unsafeAdd(List<Object> list, Object o) {
 		list.add(o);
 	}
-	
+
 	@Test
 	void test_unsafeAdd() {
 		List<String> list = new ArrayList<>();
@@ -158,20 +157,21 @@ class UnitTests {
 			String string = list.get(1);
 		});
 	}
+
 	int numOfELementsInCommon(Set<?> s1, Set<?> s2) {
 		int r = 0;
 		if (s1 instanceof HashSet) {
 			System.out.println(s1.getClass());
-			HashSet<?> sk = (HashSet<?>)s1;
+			HashSet<?> sk = (HashSet<?>) s1;
 		}
 		System.out.println(s1.size());
 		System.out.println(s2.size());
-		for(Object o: s1)
+		for (Object o : s1)
 			if (s2.contains(o))
 				r++;
 		return r;
 	}
-	
+
 	@Test
 	void test_setsInCommon() {
 		Set<String> s1 = new HashSet<String>();
@@ -188,12 +188,12 @@ class UnitTests {
 //		System.out.println(List<String>.class());
 //		System.out.println(List<?>.class);	
 	}
-	
+
 	@Test
 	void test_warnings() {
 		Set<String> set = new HashSet<>();
 	}
-	
+
 	@Test
 	void test_arrays_vs_generics() {
 		Object[] objects = new Long[10];
@@ -203,29 +203,93 @@ class UnitTests {
 //		List<Object> list = new ArrayList<Long>(); // compilation error
 //		String[] strings = new Long[10]; //compilation error, array reified
 	}
-	
+
 	@Test
 	void test_stack() {
 		Stack<String> stack = new Stack<String>();
 		stack.push("alhumdulillah");
-		stack.push("bismillah");	
-		while(!stack.isEmpty())
+		stack.push("bismillah");
+		while (!stack.isEmpty())
 			System.out.println(stack.pop());
-		
+
 		Stack<List<String>> stack2 = new Stack<List<String>>();
 		List<String> list = Arrays.asList("alhumdulillah", "bismillah");
 		List<String> list2 = Arrays.asList("cal", "dog");
 		stack2.push(list);
 		stack2.push(list2);
-		while(!stack2.isEmpty())
+		while (!stack2.isEmpty())
 			System.out.println(stack2.pop().toString());
 	}
-	
+
 	public static <E> Set<E> union(Set<E> s1, Set<E> s2) {
 		Set<E> result = new HashSet<E>(s1);
 		result.addAll(s2);
 		return result;
 	}
-	
-}
 
+	public static <E extends Comparable<E>> E max(Collection<E> collection) {
+		if (collection == null) {
+			throw new NullPointerException("max");
+		}
+		if (collection.isEmpty()) {
+			throw new IllegalArgumentException("max");
+		}
+		Iterator<E> iterator = collection.iterator();
+		E result = iterator.next();
+		while (iterator.hasNext()) {
+			E e = (E) iterator.next();
+			if (e == null) {
+				throw new NullPointerException("max");
+			}
+			if (e.compareTo(result) > 0) {
+				result = e;
+			}
+		}
+		return result;
+	}
+
+	@Test
+	void test_max() {
+		List<String> list = Arrays.asList("cat", "annabelle", "dogg", null);
+		assertThrows(NullPointerException.class, () -> {
+			max(list);
+			max(null);
+		});
+
+		assertThrows(IllegalArgumentException.class, () -> {
+			max(new ArrayList());
+		});
+	}
+
+	public static <E> Set<E> unionAll(Set<? extends E> s1, Set<? extends E> s2) {
+		Set<E> s = new HashSet<E>(s1);
+		s.addAll(s2);
+		return s;
+	}
+
+	@Test
+	void test_union() {
+		Set<Integer> integers = Set.of(1, 2, 4);
+		Set<Double> doubles = Set.of(1.3, 3.0, 2.5);
+		Set<String> strings = Set.of("cat", "dog");
+		Set<Number> set = unionAll(integers, doubles);
+		Set<Object> set2 = unionAll(set, strings);
+		System.out.println(set2);
+	}
+
+	public static <E extends Comparable<? super E>> E myMax(List<? extends E> list) {
+
+//		Iterator<E> iterator = list.iterator();
+//		E result = iterator.next();
+
+		return null;
+	}
+
+	private static <E> void swapHelper(List<E> list, int i, int j) {
+		list.set(i, list.set(j, list.get(i)));
+	}
+
+	public static void swap(List<?> list, int i, int j) {
+		swapHelper(list, i, j);
+	}
+}

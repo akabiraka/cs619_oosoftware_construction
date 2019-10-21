@@ -2,6 +2,11 @@ package com.ch5;
 
 import java.util.Arrays;
 import java.util.EmptyStackException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.junit.jupiter.api.Test;
 
 public class Stack<E> {
 	private E[] elements;
@@ -40,4 +45,6 @@ public class Stack<E> {
 			elements = Arrays.copyOf(elements, 2 * size + 1);
 		}
 	}
+	
+	
 }
