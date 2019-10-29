@@ -9,8 +9,12 @@ import java.util.List;
  * inserted into this such that a comes before b, while serving a must be served
  * before b.
  * 
- * AF(c) = c[0], c[1], ... ... c[n] where n=size-1. rep-inv: 1. c!=null 2.
- * c[i]!=null for 0 <= i < size-1 3. size >= 0 4. c.size <= size
+ * AF(c) = c[1], ... ... c[k] where k<=size. 
+ * rep-inv: 
+ * 1. c!=null 
+ * 2. c[i]!=null for 0 <= i < size-1 
+ * 3. size >= 0 
+ * 4. c.size <= size
  *
  * @param <E> The Type of the elements in this.
  */
@@ -104,7 +108,6 @@ public class BoundedQueue<E> {
 	 * @throws NullPointerException     if any item of elements is null.
 	 * @throws IllegalArgumentException if the collection size of items exceeds this
 	 *                                  size.
-	 * @throws IllegalArgumentException if the collection passed is empty.
 	 */
 	public void putAll(Iterable<? extends E> elements) {
 		if (elements == null)
@@ -114,10 +117,6 @@ public class BoundedQueue<E> {
 			if (e == null)
 				throw new NullPointerException("BoundedQueue.putAll: Can not put null into queue.");
 			list.add(e);
-		}
-
-		if (list.isEmpty()) {
-			throw new IllegalArgumentException("BoundedQueue.putAll: Nothing to put into queue.");
 		}
 
 		if (list.size() + this.rep.size() > this.size) {

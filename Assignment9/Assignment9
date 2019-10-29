@@ -1,0 +1,14 @@
+
+1. EF(started & !ready)
+2. AG(request -> AX(AF acknowledged))
+3. AG(AF enabled)
+4. AF(AG deadlocked)
+5. AG(EF restart)
+6. AG(direction==up & floor==2 & Button5Pressed -> AX(direction==up U floor==2))
+7. AG(floor==3 & doorClosed -> EX(idle))
+8. AG(switchClosed==true -> AX(AG(valueOpen!=true)))
+9. AG(q -> AX(AG(p!=true U r))
+10. AG(toggle -> AX(!toggle))
+
+
+

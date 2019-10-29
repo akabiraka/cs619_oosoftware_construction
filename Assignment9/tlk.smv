@@ -1,0 +1,76 @@
+-- SMV Specification for simple EW,NS intersection
+-- Paul Ammann
+
+MODULE main
+VAR
+  EW       : direction; NS : direction;
+
+  EWGreen  : process ToGreen(EW, NS);
+  NSGreen  : process ToGreen(NS, EW);
+
+  EWYellow : process ToYellow(EW);
+  NSYellow : process ToYellow(NS);
+
+  EWRed    : process ToRed(EW);
+  NSRed    : process ToRed(NS);
+
+--ASSIGN
+   
+-- check for at least one red light in EW,NS conflict pair
+SPEC
+   AG((EW.light = red | NS.light = red))
+-- (EW, NS) check for intervening yellow
+SPEC
+   AG((NS.light = green ) -> AX (EW.light = red))
+
+-- spec for test generation
+--SPEC
+ --  AG((NS.light = green ) -> (AG !(NS.light = red)))
+
+
+MODULE direction
+VAR
+   light : {red, yellow, green};
+ASSIGN
+   init(light) := red;
+
+MODULE ToGreen(dir1, cdir1)
+
+ASSIGN
+   next(dir1.light) :=
+      case
+       (dir1.light = red) & (cdir1.light = red) : green;
+       TRUE : dir1.light;
+      esac;
+
+MODULE ToYellow(dir1)
+
+ASSIGN
+   next(dir1.light) :=
+      case
+       (dir1.light = green) : yellow;
+       TRUE : dir1.light;
+      esac;
+
+MODULE ToRed(dir1)
+
+ASSIGN
+   next(dir1.light) :=
+      case
+       (dir1.light = yellow) : red;
+       TRUE : dir1.light;
+      esac;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

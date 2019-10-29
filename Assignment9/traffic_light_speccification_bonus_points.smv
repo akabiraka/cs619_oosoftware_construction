@@ -1,0 +1,126 @@
+-- SMV Specification for simple EW,NS intersection
+
+MODULE main
+VAR
+  NE : direction;
+  EW : direction; 
+  NS : direction;
+  WE : direction; 
+  SN : direction;
+  ES : direction; 
+  WN : direction;  
+  SW : direction;
+  EWGreen  : process ToGreen(EW, NS, SN, WN, SW, NE);
+  WEGreen  : process ToGreen(WE, NS, SN, ES, NE, SW);
+  NSGreen  : process ToGreen(NS, EW, WE, ES, WN, SW);
+  SNGreen  : process ToGreen(SN, EW, WE, WN, NE, ES);
+  WNGreen  : process ToGreen(WN, EW, NS, SN, SW, NE);
+  NEGreen  : process ToGreen(NE, SN, EW, WE, ES, WN);
+  SWGreen  : process ToGreen(SW, NS, EW, WE, ES, WN);
+  ESGreen  : process ToGreen(ES, WE, NS, SN, SW, NE);
+  EWYellow : process ToYellow(EW);
+  NSYellow : process ToYellow(NS);
+  WEYellow : process ToYellow(WE);
+  SNYellow : process ToYellow(SN);
+  SWYellow : process ToYellow(SW);
+  NEYellow : process ToYellow(NE);
+  WNYellow : process ToYellow(WN);
+  ESYellow : process ToYellow(ES);
+  EWRed : process ToRed(EW);
+  NSRed : process ToRed(NS);
+  WERed : process ToRed(WE);
+  SNRed : process ToRed(SN);
+  SWRed : process ToRed(SW);
+  NERed : process ToRed(NE);
+  WNRed : process ToRed(WN);
+  ESRed : process ToRed(ES);
+
+
+--check for at least one red light in conflicting situations
+SPEC
+   AG((WE.light = red) | (NS.light = red & SN.light = red & ES.light = red & NE.light = red & SW.light = red))
+
+SPEC
+   AG((EW.light = red) | (NS.light = red & SN.light = red & WN.light = red & NE.light = red & SW.light = red))
+
+SPEC
+   AG((NS.light = red) | (EW.light = red & WE.light = red & WN.light = red & SW.light = red & ES.light = red))
+
+SPEC
+   AG((SN.light = red) | (EW.light = red & WE.light = red & NE.light = red & WN.light = red & ES.light = red))
+
+SPEC
+   AG((SW.light = red) | (EW.light = red & WE.light = red & NS.light = red & ES.light = red & WN.light =red))
+
+SPEC
+   AG((ES.light = red) | (WE.light = red & SN.light = red & NS.light = red & SW.light = red & NE.light = red))
+
+SPEC
+   AG((NE.light = red) | (SN.light = red & EW.light = red & WE.light = red & ES.light = red & WN.light = red))
+
+SPEC
+   AG((WN.light = red) | (NS.light = red & EW.light = red & SN.light = red & SW.light = red & NE.light = red))
+
+--check for intervening yellow
+SPEC
+   AG((NS.light = green ) -> AX (EW.light = red))
+
+-- If the light for a given light is GREEN, then the lights for all conflicting diretions are RED.
+-- these are non-turning cases
+SPEC
+   AG((NS.light = green ) -> AX (EW.light = red & WE.light = red & WN.light = red & ES.light = red & SW.light = red))
+
+SPEC
+   AG((SN.light = green ) -> AX (EW.light = red & WE.light = red & WN.light = red & ES.light = red & NE.light = red))
+
+SPEC
+   AG((EW.light = green ) -> AX (NS.light = red & SN.light = red & NE.light = red & SW.light = red & WN.light = red))
+
+SPEC
+   AG((WE.light = green ) -> AX (NS.light = red & SN.light = red & NE.light = red & SW.light = red & ES.light = red))
+-- these are left turning cases
+SPEC
+   AG((ES.light = green) -> AX (SN.light = red & NS.light = red & WE.light = red & SW.light = red & NE.light = red))
+   
+SPEC
+   AG((SW.light = green) -> AX (NS.light = red & WE.light = red & EW.light = red & WN.light = red & ES.light = red))
+
+SPEC
+   AG((WN.light = green) -> AX (EW.light = red & NS.light = red & SN.light = red & SW.light = red & NE.light = red))
+
+SPEC
+   AG((NE.light = green) -> AX (SN.light = red & EW.light = red & WE.light = red & ES.light = red & WN.light = red))
+
+
+MODULE direction
+VAR
+   light : {red, yellow, green};
+ASSIGN
+   init(light) := red;
+
+
+MODULE ToGreen(dir1, cdir1, cdir2, cdir3, cdir4, cdir5)
+ASSIGN
+   next(dir1.light) :=
+      case
+       (dir1.light = red) & (cdir1.light = red) & (cdir2.light = red) & (cdir3.light =red) & (cdir4.light = red) & (cdir5.light = red): green;
+       TRUE : dir1.light;
+      esac;
+
+MODULE ToYellow(dir1)
+ASSIGN
+   next(dir1.light) :=
+      case
+       (dir1.light = green) : yellow;
+       TRUE : dir1.light;
+      esac;
+
+MODULE ToRed(dir1)
+ASSIGN
+   next(dir1.light) :=
+      case
+       (dir1.light = yellow) : red;
+       TRUE : dir1.light;
+      esac;
+
+

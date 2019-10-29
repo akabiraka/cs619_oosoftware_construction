@@ -82,7 +82,8 @@ class UnitTests {
 		List<String> stringList = Arrays.asList(null, null, null);
 		assertThrows(NullPointerException.class, () -> q.putAll(stringList)); // putting a collection that contains null value into queue
 		List<String> stringList2 = new ArrayList<String>();
-		assertThrows(IllegalArgumentException.class, () -> q.putAll(stringList2)); // putting an empty collection into queue
+		q.putAll(stringList2);
+//		assertThrows(IllegalArgumentException.class, () -> q.putAll(stringList2)); // putting an empty collection into queue
 		List<String> stringList3 = null;
 		assertThrows(NullPointerException.class, () -> q.getAll(stringList3)); // passing null destination to receive all items from queue 
 		assertTrue(q.repOk());
