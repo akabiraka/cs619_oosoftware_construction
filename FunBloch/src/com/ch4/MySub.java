@@ -1,11 +1,13 @@
 package com.ch4;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class MySub extends MySuper{
+public class MySub extends MySuper implements Cloneable, Serializable{
 
 	private final Date date;
-	public MySub() {
+	public MySub(int x) {
+		super(x);
 		overrideMe();
 		date = new Date(0);
 	}

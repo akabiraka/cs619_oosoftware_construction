@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import com.packagevisible.only.SubClassA;
 
+import static com.ch4.PhysicalConstants.*;
 class UnitTests {
 
 	@Test
@@ -33,7 +34,7 @@ class UnitTests {
 		System.out.println(Complex.ONE);
 		System.out.println(Complex.I);
 	}
-	
+
 	@Test
 	void test_instrumentedHashSet() {
 		InstrumentedHashSet<String> hashSet = new InstrumentedHashSet<String>();
@@ -42,7 +43,7 @@ class UnitTests {
 		hashSet.addAll(list);
 		System.out.println(hashSet.getAddCount());
 	}
-	
+
 	@Test
 	void test_OkInstrumentedHashSet() {
 		OkInstrumentedHashSet<String> hashSet = new OkInstrumentedHashSet<String>(new HashSet<String>());
@@ -50,10 +51,29 @@ class UnitTests {
 		hashSet.addAll(List.of("bee", "cat", "dog"));
 		System.out.println(hashSet.getAddCount());
 	}
-	
+
 	@Test
 	void test_callingOverridableMethodsFromConstructor() {
-		MySub sub = new MySub();
+		MySub sub = new MySub(12);
 		sub.overrideMe();
+		MySuper super1 = new MySuper(11);
+		System.out.println(super1.clone().equals(super1));
+	}
+	
+	@Test
+	void test_ITestSubClasses() {
+		ITest test1 = new Sub1Test();
+		ITest test2 = new Sub2Test();
+		ITest test3 = new Sub3Test();
+		System.out.println(test1.getD());
+		System.out.println(test2.getB());
+		System.out.println(test3.getD());
+	}
+	
+	@Test
+	void test_physicalConstants() {
+		System.out.println(AVOGADROS_NUMBER);
+		System.out.println(BOLTZMAN_CONST);
+		System.out.println(ELECTRON_MASS);
 	}
 }
