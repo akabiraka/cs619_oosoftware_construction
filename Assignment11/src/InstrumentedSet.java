@@ -1,10 +1,10 @@
 import java.util.Collection;
 import java.util.Set;
 
-public class InstumentedSet<E> extends ForwardingSet<E> {
+public class InstrumentedSet<E> extends ForwardingSet<E> {
 	private int addCount = 0;
 
-	public InstumentedSet(Set<E> s) {
+	public InstrumentedSet(Set<E> s) {
 		super(s);
 	}
 
