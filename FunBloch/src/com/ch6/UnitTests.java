@@ -71,5 +71,10 @@ class UnitTests {
 		helperOfBellowTest(Arrays.asList(MyBasicOperation.values()), x, y);
 		helperOfBellowTest(Arrays.asList(MyExtendedOperation.values()), x, y);
 	}
+	
+	@MyTest
+	public static void test_MyTestAnnotation() {
+		System.out.println("Alhumdulliah");
+	}
 
 }
