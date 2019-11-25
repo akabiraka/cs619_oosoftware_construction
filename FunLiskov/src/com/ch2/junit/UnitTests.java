@@ -86,5 +86,30 @@ class UnitTests {
 		//assertEquals(obj.equals(str2), true); // true
 		assertEquals(str2.equals(obj), true); // true
 	}
+	
+	@Test
+	void test_nullString() {
+		String string = null;
+		System.out.println(string+string+string);
+	}
+	
+	@Test
+	void test_sameStringReference() {
+		String string = "alhumdulillah";
+		String string2 = string;
+		String string3 = string.replace('a', '0');
+		System.out.println(string3);
+		System.out.println(string2);
+	}
+	
+	@Test
+	void test_dispatch() {
+		String t = "ab";
+		Object o = t + "c";
+		t = "abc";
+		System.out.println(o.equals(t));
+		System.out.println(t.equals(o));
+		Integer x = Integer.valueOf(10);
+	}
 
 }
