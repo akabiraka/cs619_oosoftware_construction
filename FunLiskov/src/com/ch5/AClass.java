@@ -9,4 +9,12 @@ public class AClass {
 		this.a = a;
 		this.b = b;
 	}
+	
+	public void test() {
+		System.out.println("test");
+	}
+	
+	public static void staticTest() {
+		System.out.println("statictest");
+	}
 }
